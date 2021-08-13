@@ -4,7 +4,21 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Weather</title>
 	</head>
-	<body></body>
+	<body>
+		<form>
+			<input type="text" name="location" id="location-input" required />
+			<input type="submit" value="Find" />
+		</form>
+		<div id="display-container">
+			<div id="location"></div>
+			<div id="temp"></div>
+			<div id="weather-main"></div>
+			<div id="weather-desc"></div>
+			<div id="humidity"></div>
+			<div id="feels-like"></div>
+		</div>
+		<script src="main.js"></script>
+	</body>
 </html>

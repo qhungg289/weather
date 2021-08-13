@@ -18,14 +18,14 @@ async function getWeatherData(location, unit) {
 function processWeatherData(data) {
 	const location = data.name;
 	const temp = data.main.temp;
-	const feels_like = data.main.feels_like;
+	const feelsLike = data.main.feels_like;
 	const humidity = data.main.humidity;
 	const weatherMain = data.weather[0].main;
 	const weatherDesc = data.weather[0].description;
 	return {
 		location,
 		temp,
-		feels_like,
+		feelsLike,
 		humidity,
 		weatherMain,
 		weatherDesc,
@@ -37,5 +37,6 @@ form.onsubmit = async (event) => {
 	const weatherData = await getWeatherData(`${input.value}`, "metric").then(
 		processWeatherData
 	);
+	renderPage(weatherData);
 	console.log(weatherData);
 };

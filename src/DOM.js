@@ -1,14 +1,7 @@
 const form = document.querySelector("form");
 const input = document.getElementById("location-input");
 
-function renderPage(
-	location,
-	temp,
-	feels_like,
-	humidity,
-	weatherMain,
-	weatherDesc
-) {
+function renderPage(weatherData) {
 	const locationDisplay = document.getElementById("location");
 	const tempDisplay = document.getElementById("temp");
 	const feelsLikeDisplay = document.getElementById("feels-like");
@@ -16,12 +9,12 @@ function renderPage(
 	const weatherMainDisplay = document.getElementById("weather-main");
 	const weatherDescDisplay = document.getElementById("weather-desc");
 
-	locationDisplay.innerHTML = location;
-	tempDisplay.innerHTML = `${temp}&deg;`;
-	feelsLikeDisplay.innerHTML = `${feels_like}&deg;`;
-	humidityDisplay.innerHTML = `${humidity}%`;
-	weatherMainDisplay.innerHTML = weatherMain;
-	weatherDescDisplay.innerHTML = weatherDesc;
+	locationDisplay.innerHTML = weatherData.location;
+	tempDisplay.innerHTML = `${weatherData.temp}&deg;`;
+	feelsLikeDisplay.innerHTML = `${weatherData.feelsLike}&deg;`;
+	humidityDisplay.innerHTML = `${weatherData.humidity}%`;
+	weatherMainDisplay.innerHTML = weatherData.weatherMain;
+	weatherDescDisplay.innerHTML = weatherData.weatherDesc;
 }
 
 export { form, input, renderPage };

@@ -1,6 +1,7 @@
 import "./style.css";
 import { form, input, unitSwitch, renderPage } from "./DOM.js";
 
+// Fetch & Process
 async function fetchWeatherData(location, unit) {
 	try {
 		const response = await fetch(
@@ -40,38 +41,54 @@ function processWeatherData(data) {
 // Handle events
 let unit = unitSwitch.checked ? "imperial" : "metric";
 
+window.onload = async () => {
+	if (localStorage.getItem("location") != null) {
+		renderPage(
+			await fetchWeatherData(localStorage.getItem("location"), unit).then(
+				processWeatherData
+			)
+		);
+	}
+};
+
 form.onsubmit = async (event) => {
-	event.preventDefault();
-	localStorage.setItem("location", input.value);
-	const weatherData = await fetchWeatherData(
-		localStorage.getItem("location"),
-		unit
-	).then(processWeatherData);
-	renderPage(weatherData);
-	console.log(weatherData);
+	try {
+		event.preventDefault();
+		localStorage.setItem("location", input.value);
+		renderPage(
+			await fetchWeatherData(localStorage.getItem("location"), unit).then(
+				processWeatherData
+			)
+		);
+		input.value = null;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 unitSwitch.onclick = async () => {
 	try {
 		if (unitSwitch.checked) {
-			if (input.value == "") {
+			if (localStorage.getItem("location") == null) {
 				unit = "imperial";
 			} else {
 				unit = "imperial";
-				const weatherData = await fetchWeatherData(input.value, unit).then(
-					processWeatherData
+				renderPage(
+					await fetchWeatherData(localStorage.getItem("location"), unit).then(
+						processWeatherData
+					)
 				);
-				renderPage(weatherData);
 			}
 		} else {
-			if (input.value == "") {
+			if (localStorage.getItem("location") == null) {
 				unit = "metric";
 			} else {
 				unit = "metric";
-				const weatherData = await fetchWeatherData(input.value, unit).then(
-					processWeatherData
+				renderPage(
+					await fetchWeatherData(localStorage.getItem("location"), unit).then(
+						processWeatherData
+					)
 				);
-				renderPage(weatherData);
 			}
 		}
 	} catch (error) {

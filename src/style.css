@@ -14,9 +14,7 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	font-family: "Roboto", sans-serif;
 }
 
 /* The switch - the box around the slider */
@@ -228,9 +226,7 @@ button[type="submit"]:hover {
 	font-size: 1rem;
 	transition: 0.4s;
 	font-weight: normal;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	font-family: "Roboto", sans-serif;
 	pointer-events: none;
 	opacity: var(--opacity);
 }
@@ -267,6 +263,7 @@ button[type="submit"]:hover {
 	justify-content: space-around;
 	align-items: center;
 	overflow: auto;
+	position: relative;
 }
 
 #feels-like-container,

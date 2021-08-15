@@ -108,12 +108,14 @@ form {
 	display: flex;
 	position: relative;
 	width: 90%;
+	height: 3rem;
 	max-width: 400px;
 }
 
 input[type="text"] {
 	width: 100%;
-	padding: 0.825rem;
+	height: 100%;
+	padding: 0 1rem;
 	font-size: 1rem;
 	outline: none;
 	border: none;
@@ -132,6 +134,7 @@ button[type="submit"] {
 	outline: none;
 	border: none;
 	padding: 1rem;
+	height: 100%;
 	border-radius: 6px;
 	line-height: 0;
 	color: white;

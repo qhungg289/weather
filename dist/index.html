@@ -4,27 +4,59 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script
+			src="https://kit.fontawesome.com/313ff853e5.js"
+			crossorigin="anonymous"
+		></script>
 		<title>Weather</title>
 	</head>
 	<body>
-		<form>
-			<input type="text" name="location" id="location-input" required />
-			<input type="submit" value="Find" />
-		</form>
-		<label class="switch">
-			<input type="checkbox" id="unit-switch" />
-			<span class="slider round"></span>
-		</label>
-		<div id="display-container">
-			<div id="location"></div>
-			<div id="temp"></div>
-			<div id="temp-high"></div>
-			<div id="temp-low"></div>
-			<div id="feels-like"></div>
-			<div id="humidity"></div>
-			<div id="rain-in-hour"></div>
-			<div id="weather-main"></div>
-			<div id="weather-desc"></div>
+		<div id="main-info">
+			<form>
+				<input
+					type="text"
+					name="location"
+					id="location-input"
+					required
+					placeholder="Your location..."
+				/>
+				<button type="submit">
+					<i class="fas fa-search fa-rotate-90"></i>
+				</button>
+				<div id="error-tool-tip">City not found.</div>
+			</form>
+
+			<div id="temp-location-container">
+				<div id="location"></div>
+				<div id="temp"></div>
+				<div id="weather-desc"></div>
+				<div id="high-low">
+					<span id="temp-high"></span>
+					<span id="temp-low"></span>
+				</div>
+			</div>
+
+			<label class="switch">
+				<input type="checkbox" id="unit-switch" />
+				<span class="slider round"></span>
+			</label>
+		</div>
+
+		<div id="more-info">
+			<div id="feels-like-container">
+				<p>Feels like</p>
+				<div id="feels-like"></div>
+			</div>
+
+			<div id="cloudiness-container">
+				<p>Cloudiness</p>
+				<div id="cloudiness"></div>
+			</div>
+
+			<div id="humidity-container">
+				<p>Humidity</p>
+				<div id="humidity"></div>
+			</div>
 		</div>
 		<script src="main.js"></script>
 	</body>

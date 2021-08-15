@@ -147,17 +147,22 @@ button[type="submit"]:hover {
 
 #error-tool-tip {
 	position: absolute;
+	display: flex;
+	align-items: center;
 	color: #d64b4b;
 	background-color: white;
-	padding: 0.75rem;
-	border-radius: 6px;
+	padding: 0 0.75rem;
+	height: 100%;
 	font-weight: 500;
-	top: 0rem;
 	right: 3rem;
 	opacity: 0;
 	transition: 0.2s;
 	user-select: none;
 	pointer-events: none;
+}
+
+#error-tool-tip p {
+	margin: 0;
 }
 
 /* Main info */

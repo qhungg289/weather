@@ -84,28 +84,20 @@ form.onsubmit = async (event) => {
 
 unitSwitch.onclick = async () => {
 	if (unitSwitch.checked) {
-		if (localStorage.getItem("location") == null) {
-			unit = "imperial";
-		} else {
-			unit = "imperial";
-			renderPage(
-				await fetchWeatherData(localStorage.getItem("location"), unit).then(
-					processWeatherData
-				)
-			);
-			await changeColorBasedOnTemp();
-		}
+		unit = "imperial";
+		renderPage(
+			await fetchWeatherData(localStorage.getItem("location"), unit).then(
+				processWeatherData
+			)
+		);
+		await changeColorBasedOnTemp();
 	} else {
-		if (localStorage.getItem("location") == null) {
-			unit = "metric";
-		} else {
-			unit = "metric";
-			renderPage(
-				await fetchWeatherData(localStorage.getItem("location"), unit).then(
-					processWeatherData
-				)
-			);
-			await changeColorBasedOnTemp();
-		}
+		unit = "metric";
+		renderPage(
+			await fetchWeatherData(localStorage.getItem("location"), unit).then(
+				processWeatherData
+			)
+		);
+		await changeColorBasedOnTemp();
 	}
 };

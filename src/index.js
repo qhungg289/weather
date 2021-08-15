@@ -3,9 +3,11 @@ import {
 	form,
 	input,
 	unitSwitch,
+	refreshBtn,
 	renderPage,
 	showErrorMessage,
 	changeColorBasedOnTemp,
+	showUpdatedMessage,
 } from "./DOM.js";
 
 // Fetch & Process
@@ -100,4 +102,14 @@ unitSwitch.onclick = async () => {
 		);
 		await changeColorBasedOnTemp();
 	}
+};
+
+refreshBtn.onclick = async () => {
+	renderPage(
+		await fetchWeatherData(localStorage.getItem("location"), unit).then(
+			processWeatherData
+		)
+	);
+	await changeColorBasedOnTemp();
+	setTimeout(showUpdatedMessage(), 500);
 };

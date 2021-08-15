@@ -1,18 +1,25 @@
 import "./style.css";
-import { form, input, unitSwitch, renderPage } from "./DOM.js";
+import {
+	form,
+	input,
+	unitSwitch,
+	renderPage,
+	showErrorMessage,
+	changeColorBasedOnTemp,
+} from "./DOM.js";
 
 // Fetch & Process
 async function fetchWeatherData(location, unit) {
-	try {
-		const response = await fetch(
-			`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${unit}&appid=b64bbe7a06151506205e77908f58b1c7`,
-			{ mode: "cors" }
-		);
+	const response = await fetch(
+		`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${unit}&appid=b64bbe7a06151506205e77908f58b1c7`,
+		{ mode: "cors" }
+	);
+
+	if (response.status == 404) {
+		errorHandler(response);
+	} else {
 		const responseData = await response.json();
-		console.log(responseData);
 		return responseData;
-	} catch (error) {
-		console.log(error);
 	}
 }
 
@@ -25,41 +32,50 @@ function processWeatherData(data) {
 		feelsLike: Math.round(data.main.feels_like),
 		humidity: data.main.humidity,
 		cloudiness: data.clouds.all,
-		weatherMain: data.weather[0].main,
 		weatherDesc: data.weather[0].description,
-		weatherId: data.weather[0].id,
-		weatherIcon: data.weather[0].icon,
 	};
 
 	return processedData;
 }
 
-// [x] Add a switch for metric / imperial unit
-// [x] Display weather icon
-// [x] Set the location to localStorage
+// Error handler
+function errorHandler(error) {
+	console.log(error.status, error.statusText);
+	showErrorMessage();
+}
 
 // Handle events
 let unit = unitSwitch.checked ? "imperial" : "metric";
 
 window.onload = async () => {
-	if (localStorage.getItem("location") != null) {
-		renderPage(
-			await fetchWeatherData(localStorage.getItem("location"), unit).then(
-				processWeatherData
-			)
-		);
+	try {
+		if (localStorage.getItem("location") != null) {
+			renderPage(
+				await fetchWeatherData(localStorage.getItem("location"), unit).then(
+					processWeatherData
+				)
+			);
+			await changeColorBasedOnTemp();
+		} else {
+			renderPage(
+				await fetchWeatherData("New York", unit).then(processWeatherData)
+			);
+			localStorage.setItem("location", "New York");
+			await changeColorBasedOnTemp();
+		}
+	} catch (error) {
+		console.log(error);
 	}
 };
 
 form.onsubmit = async (event) => {
 	try {
 		event.preventDefault();
-		localStorage.setItem("location", input.value);
 		renderPage(
-			await fetchWeatherData(localStorage.getItem("location"), unit).then(
-				processWeatherData
-			)
+			await fetchWeatherData(input.value, unit).then(processWeatherData)
 		);
+		await changeColorBasedOnTemp();
+		localStorage.setItem("location", input.value);
 		input.value = null;
 	} catch (error) {
 		console.log(error);
@@ -67,31 +83,29 @@ form.onsubmit = async (event) => {
 };
 
 unitSwitch.onclick = async () => {
-	try {
-		if (unitSwitch.checked) {
-			if (localStorage.getItem("location") == null) {
-				unit = "imperial";
-			} else {
-				unit = "imperial";
-				renderPage(
-					await fetchWeatherData(localStorage.getItem("location"), unit).then(
-						processWeatherData
-					)
-				);
-			}
+	if (unitSwitch.checked) {
+		if (localStorage.getItem("location") == null) {
+			unit = "imperial";
 		} else {
-			if (localStorage.getItem("location") == null) {
-				unit = "metric";
-			} else {
-				unit = "metric";
-				renderPage(
-					await fetchWeatherData(localStorage.getItem("location"), unit).then(
-						processWeatherData
-					)
-				);
-			}
+			unit = "imperial";
+			renderPage(
+				await fetchWeatherData(localStorage.getItem("location"), unit).then(
+					processWeatherData
+				)
+			);
+			await changeColorBasedOnTemp();
 		}
-	} catch (error) {
-		console.log(error);
+	} else {
+		if (localStorage.getItem("location") == null) {
+			unit = "metric";
+		} else {
+			unit = "metric";
+			renderPage(
+				await fetchWeatherData(localStorage.getItem("location"), unit).then(
+					processWeatherData
+				)
+			);
+			await changeColorBasedOnTemp();
+		}
 	}
 };
